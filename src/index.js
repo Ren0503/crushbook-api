@@ -1,8 +1,10 @@
 const path = require('path');
+const cors = require('cors');
 const express = require('express');
 const dotenv = require('dotenv');
 const colors = require('colors');
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 const connectDB = require('./config/db');
 
@@ -18,6 +20,9 @@ connectDB();
 
 const app = express();
 
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
